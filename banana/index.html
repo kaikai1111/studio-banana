@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>スタジオバナナ｜STUDIO BANANA 公式サイト</title>
+<meta name="description" content="ゲームで出会った仲間たちが贈る、予測不能なアソビ場。インディーゲームスタジオ「スタジオバナナ」の公式サイトです。">
+<meta name="theme-color" content="#F3CB34">
+<meta property="og:title" content="スタジオバナナ｜STUDIO BANANA">
+<meta property="og:description" content="画面の向こうの相棒と、世界を驚かせる。">
+<meta property="og:image" content="assets/logo_full.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo_icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS ── 白ベース × バナナイエロー × 濃紺（ロゴ準拠）
+   ============================================================ */
+:root{
+  --paper:#FFFDF6;        /* ベース（あたたかい白） */
+  --cream:#FBF3D8;        /* 交互セクション */
+  --ink:#22384D;          /* 本文の濃紺 */
+  --ink-soft:#5C6E7E;     /* サブテキスト */
+  --navy:#27455F;         /* 濃紺（ロゴの縁色） */
+  --yellow:#F3CB34;       /* バナナイエロー */
+  --yellow-deep:#C9970B;
+  --blue:#376082;         /* ロゴのパーカー色 */
+  --blue-pale:#E8EFF5;
+  --red:#E8503A;
+  --line:rgba(34,56,77,.16);
+  --shadow:0 4px 0 var(--navy);
+
+  --ui:"Montserrat","Noto Sans JP",sans-serif;
+  --body:"Noto Sans JP",system-ui,-apple-system,"Hiragino Kaku Gothic ProN",sans-serif;
+
+  --pad:clamp(20px,4vw,60px);
+  --maxw:1160px;
+  --ease:cubic-bezier(.2,.9,.25,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.9;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+::selection{background:var(--yellow);color:var(--navy)}
+
+/* うっすら方眼（日本のポップ系企業サイトによくある地紋） */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background:
+    linear-gradient(rgba(34,56,77,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,56,77,.05) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);position:relative}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;z-index:99;background:var(--navy);color:#fff;padding:10px 16px;border-radius:8px}
+
+/* 黒縁白文字（ステッカー表現）── 黄色背景の上で使う */
+.sticker{
+  color:#fff;
+  -webkit-text-stroke:clamp(4px,.7vw,7px) var(--navy);
+  paint-order:stroke fill;
+  text-shadow:0 5px 0 rgba(39,69,95,.35);
+}
+.sticker .y{color:var(--yellow)}
+
+/* セクション見出し：黄色い角マーカー＋日本語見出し＋小さな英字 */
+.shead{margin-bottom:34px}
+.shead__row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.shead__jp{
+  display:flex;align-items:center;gap:14px;
+  font-size:clamp(22px,3.2vw,31px);font-weight:900;line-height:1.4;margin:0;letter-spacing:.02em;
+}
+.shead__jp::before{
+  content:"";width:14px;height:14px;flex:none;background:var(--yellow);
+  border:2px solid var(--navy);border-radius:3px;transform:rotate(45deg);
+}
+.shead__en{
+  display:block;font-family:var(--ui);font-size:11px;font-weight:800;letter-spacing:.26em;
+  color:var(--blue);margin:10px 0 0 28px;
+}
+.lead{font-size:clamp(14.5px,1.5vw,16px);line-height:2.05;color:var(--ink-soft);max-width:62ch;margin:0}
+
+.more{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;
+  background:#fff;border:2px solid var(--navy);border-radius:999px;padding:10px 22px;
+  color:var(--ink);font-size:13px;font-weight:700;box-shadow:var(--shadow);
+  transition:transform .2s var(--ease),box-shadow .2s,background .2s;
+}
+.more::after{content:"→";font-family:var(--ui)}
+.more:hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--navy);background:var(--yellow)}
+.more:active{transform:translateY(2px);box-shadow:0 1px 0 var(--navy)}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 32px;border-radius:999px;border:2px solid var(--navy);
+  font-weight:800;font-size:14px;letter-spacing:.04em;
+  text-decoration:none;cursor:pointer;background:var(--yellow);color:var(--navy);
+  box-shadow:var(--shadow);
+  transition:transform .2s var(--ease),box-shadow .2s,background .2s,color .2s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--navy)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--navy)}
+.btn--blue{background:var(--blue);color:#fff}
+.btn--white{background:#fff;color:var(--ink)}
+
+/* ============================================================
+   HEADER ── 上部固定の横型（日本の企業サイト定番）
+   ============================================================ */
+.hd{
+  position:sticky;top:0;z-index:60;background:rgba(255,253,246,.94);
+  backdrop-filter:blur(10px);border-bottom:2px solid var(--navy);
+}
+.hd__inner{
+  max-width:var(--maxw);margin-inline:auto;padding-inline:var(--pad);
+  display:flex;align-items:center;justify-content:space-between;gap:18px;height:76px;
+}
+.hd__logo{display:flex;align-items:center;gap:12px;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.hd__logo img{width:52px;transition:transform .4s var(--ease)}
+.hd__logo:hover img,.hd__logo img.is-slip{transform:translateX(6px) rotate(-12deg)}
+.hd__name{font-weight:900;font-size:16px;line-height:1.3;letter-spacing:.03em}
+.hd__name small{display:block;font-family:var(--ui);font-size:9px;font-weight:800;letter-spacing:.26em;color:var(--blue)}
+.hd__nav{display:flex;align-items:center;gap:2px}
+.hd__link{
+  background:none;border:0;cursor:pointer;padding:9px 15px;border-radius:8px;
+  font-size:14px;font-weight:700;color:var(--ink);text-align:center;line-height:1.3;
+  transition:background .2s,color .2s;
+}
+.hd__link small{display:block;font-family:var(--ui);font-size:8.5px;font-weight:800;letter-spacing:.2em;color:var(--ink-soft);margin-top:2px}
+.hd__link:hover{background:rgba(255,198,30,.25)}
+.hd__link[aria-current="page"]{background:var(--yellow);box-shadow:inset 0 0 0 2px var(--navy)}
+.hd__link[aria-current="page"] small{color:var(--navy)}
+.hd .btn{padding:11px 20px;font-size:13px}
+.burger{display:none;background:#fff;border:2px solid var(--navy);border-radius:10px;width:44px;height:44px;cursor:pointer;box-shadow:0 3px 0 var(--navy)}
+.burger span{display:block;width:18px;height:2px;background:var(--navy);margin:4px auto;transition:transform .3s var(--ease),opacity .2s}
+.is-open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.is-open .burger span:nth-child(2){opacity:0}
+.is-open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+@media(max-width:980px){
+  .burger{display:block}
+  .hd__nav{
+    position:fixed;inset:76px 0 auto 0;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--paper);border-bottom:2px solid var(--navy);padding:10px var(--pad) 26px;
+    transform:translateY(-130%);transition:transform .4s var(--ease);
+  }
+  .is-open .hd__nav{transform:none}
+  .hd__link{display:flex;align-items:baseline;gap:12px;text-align:left;padding:16px 6px;border-bottom:1px solid var(--line);border-radius:0}
+  .hd__link[aria-current="page"]{box-shadow:none;background:none;color:var(--yellow-deep)}
+  .hd__link small{margin-top:0}
+  .hd__nav .btn{margin-top:18px}
+}
+
+/* トラテープ（黄×紺の斜めストライプ）── サイトの署名的な帯 */
+.tape{
+  height:14px;
+  background:repeating-linear-gradient(-45deg,var(--navy) 0 14px,var(--yellow) 14px 28px);
+  border-top:2px solid var(--navy);border-bottom:2px solid var(--navy);
+}
+
+/* ============================================================
+   PAGE / BLOCK
+   ============================================================ */
+.page{display:none;position:relative;z-index:1}
+.page.is-active{display:block;animation:rise .4s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.block{padding-block:clamp(56px,7.5vw,100px);position:relative}
+.block--cream{background:var(--cream)}
+.block--navy{background:var(--navy);color:#fff}
+.block--navy .shead__jp{color:#fff}
+.block--navy .shead__en{color:var(--yellow)}
+.block--navy .lead{color:rgba(255,255,255,.75)}
+
+/* 下層ページヘッダー：黄色帯＋パンくず */
+.phead{background:var(--yellow);border-bottom:2px solid var(--navy);position:relative;overflow:hidden}
+.phead::after{
+  content:"";position:absolute;right:-40px;bottom:-60px;width:240px;height:240px;border-radius:50%;
+  background:rgba(255,255,255,.35);pointer-events:none;
+}
+.phead__inner{padding-block:clamp(40px,5.5vw,64px) clamp(22px,3vw,34px)}
+.phead__jp{font-size:clamp(27px,4.4vw,42px);font-weight:900;margin:0;line-height:1.3;letter-spacing:.02em}
+.phead__en{font-family:var(--ui);font-size:12px;font-weight:800;letter-spacing:.3em;color:var(--navy);opacity:.65;margin:8px 0 0}
+.crumb{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0;list-style:none;
+  padding:14px var(--pad);max-width:var(--maxw);margin-inline:auto;font-size:12px;color:var(--ink-soft);
+}
+.crumbbar{background:#fff;border-bottom:1px solid var(--line)}
+.crumb li::after{content:"＞";margin-left:8px;font-size:10px;color:rgba(34,56,77,.35)}
+.crumb li:last-child::after{content:""}
+.crumb li:last-child{color:var(--ink);font-weight:700}
+.crumb button{background:none;border:0;padding:0;color:var(--ink-soft);cursor:pointer;font-size:12px}
+.crumb button:hover{color:var(--yellow-deep);text-decoration:underline}
+
+/* ============================================================
+   FV ── 黄色背景画像スロット＋黒縁白文字＋ロゴ
+   ============================================================ */
+.fv{position:relative;overflow:hidden;border-bottom:2px solid var(--navy)}
+.fv__bg{
+  position:absolute;inset:0;z-index:0;
+  background:var(--fv-bg,linear-gradient(160deg,#F9DE6B 0%,#F3CB34 55%,#DDAF14 100%));
+  background-size:cover;background-position:center;
+}
+/* ドット地紋（背景画像を差してもうっすら乗る） */
+.fv__dots{
+  position:absolute;inset:0;z-index:1;opacity:.35;pointer-events:none;
+  background:radial-gradient(rgba(39,69,95,.16) 1.6px,transparent 1.6px);
+  background-size:22px 22px;
+}
+.fv__inner{
+  position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,52px);
+  align-items:center;padding-block:clamp(46px,6vw,84px);
+}
+.fv__tag{
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.1em;
+  color:#fff;background:var(--navy);padding:8px 16px;border-radius:999px;margin:0 0 22px;
+}
+.fv__tag i{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:blink 2.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.fv__copy{font-weight:900;font-size:clamp(30px,5.2vw,58px);line-height:1.34;letter-spacing:.01em;margin:0 0 20px}
+.fv__sub{
+  display:inline-block;background:var(--navy);color:#fff;font-size:clamp(13.5px,1.5vw,15.5px);
+  font-weight:700;padding:9px 16px;border-radius:8px;margin:0 0 30px;line-height:1.8;
+}
+.fv__cta{display:flex;flex-wrap:wrap;gap:12px}
+.fv__logo{position:relative;display:grid;place-items:center}
+.fv__logo img{width:min(100%,440px);filter:drop-shadow(0 20px 26px rgba(39,69,95,.3));animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-13px) rotate(1.2deg)}}
+@media(max-width:900px){
+  .fv__inner{grid-template-columns:1fr}
+  .fv__logo{order:-1}
+  .fv__logo img{width:min(72%,320px)}
+}
+
+/* 流れる帯（マーキー） */
+.marquee{background:var(--navy);overflow:hidden;border-bottom:2px solid var(--navy)}
+.marquee__track{
+  display:flex;width:max-content;animation:mq 26s linear infinite;
+  padding:12px 0;
+}
+.marquee__item{
+  font-family:var(--ui);font-weight:900;font-size:15px;letter-spacing:.16em;color:var(--yellow);
+  padding:0 28px;white-space:nowrap;
+}
+.marquee__item--w{color:rgba(255,255,255,.55)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============================================================
+   NEWS ── 表組み（日本の企業サイト定番）
+   ============================================================ */
+.news{display:grid;grid-template-columns:1fr;gap:0;border-top:2px solid var(--navy)}
+.news__item{
+  display:grid;grid-template-columns:118px 108px 1fr auto;gap:18px;align-items:center;text-decoration:none;
+  padding:22px 8px;border-bottom:1px solid var(--line);background:#fff;
+  transition:background .2s;
+}
+.news__item:hover{background:var(--cream)}
+.news__date{font-family:var(--ui);font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--ink-soft)}
+.news__cat{
+  font-size:11px;font-weight:800;letter-spacing:.06em;text-align:center;
+  background:var(--blue-pale);color:var(--blue);border:1px solid var(--blue);border-radius:4px;padding:4px 10px;
+}
+.news__cat[data-c="DEV"]{background:#FFF3D1;color:var(--yellow-deep);border-color:var(--yellow-deep)}
+.news__cat[data-c="EVENT"]{background:#FDEAE7;color:var(--red);border-color:var(--red)}
+.news__ttl{margin:0;font-size:15px;line-height:1.8;font-weight:500}
+.news__arw{font-family:var(--ui);color:var(--ink-soft);font-size:14px}
+.news__item:hover .news__arw{color:var(--yellow-deep)}
+@media(max-width:820px){
+  .news__item{grid-template-columns:110px 1fr;row-gap:8px;padding:18px 6px}
+  .news__cat{justify-self:start}
+  .news__ttl{grid-column:1/-1}
+  .news__arw{display:none}
+}
+
+/* ============================================================
+   GAMES カード
+   ============================================================ */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px}
+.card{
+  text-align:left;padding:0;cursor:pointer;color:inherit;overflow:hidden;
+  border:2px solid var(--navy);border-radius:16px;background:#fff;box-shadow:0 5px 0 var(--navy);
+  transition:transform .28s var(--ease),box-shadow .28s;
+}
+.card:hover{transform:translateY(-7px) rotate(-.6deg);box-shadow:0 12px 0 var(--navy)}
+.card__kv{display:block;aspect-ratio:16/9;position:relative;overflow:hidden;border-bottom:2px solid var(--navy)}
+.card__kv img{width:100%;height:100%;object-fit:cover}
+.card__body{display:block;padding:20px 22px 24px}
+.card__meta{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--blue);margin-bottom:8px}
+.card__ttl{display:block;font-family:var(--ui);font-weight:900;font-size:20px;letter-spacing:.02em;margin-bottom:8px}
+.card__cat{display:block;font-size:14px;color:var(--ink-soft);line-height:1.8}
+.status{
+  position:absolute;top:12px;left:12px;z-index:2;font-size:11px;font-weight:800;letter-spacing:.08em;
+  background:var(--yellow);color:var(--navy);border:2px solid var(--navy);padding:4px 12px;border-radius:999px;
+}
+.status--live{background:var(--red);color:#fff}
+
+/* ============================================================
+   GAMES 詳細
+   ============================================================ */
+.title{padding-block:clamp(48px,6.5vw,84px);border-bottom:1px solid var(--line)}
+.title:last-child{border-bottom:0}
+.title__hero{
+  position:relative;border:2px solid var(--navy);border-radius:18px;overflow:hidden;aspect-ratio:21/9;
+  margin-bottom:32px;box-shadow:0 6px 0 var(--navy);
+}
+.title__hero img,.title__hero .ph{width:100%;height:100%;object-fit:cover}
+.title__grid{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(26px,4vw,52px)}
+.title__catch{
+  display:inline-block;font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--navy);
+  background:var(--yellow);border:1.5px solid var(--navy);border-radius:6px;padding:4px 12px;margin:0 0 14px;
+}
+.title__name{font-family:var(--ui);font-weight:900;font-size:clamp(25px,4vw,40px);letter-spacing:.02em;margin:0 0 16px;line-height:1.2}
+.title__txt{font-size:15px;color:var(--ink-soft);margin:0 0 24px;line-height:2}
+.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 24px}
+.shot{aspect-ratio:16/10;border-radius:10px;overflow:hidden;border:2px solid var(--navy);position:relative;background:var(--cream)}
+.shot img,.shot .ph{width:100%;height:100%;object-fit:cover}
+.shot__cap{
+  position:absolute;left:8px;bottom:6px;font-size:10px;font-weight:700;letter-spacing:.04em;
+  color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);
+}
+.video{
+  position:relative;width:100%;padding:0;aspect-ratio:16/9;border-radius:16px;overflow:hidden;cursor:pointer;
+  border:2px solid var(--navy);background:var(--navy);display:grid;place-items:center;
+  box-shadow:0 5px 0 var(--navy);transition:transform .22s var(--ease),box-shadow .22s;
+}
+.video:hover{transform:translateY(-4px);box-shadow:0 9px 0 var(--navy)}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video__play{width:66px;height:66px;border-radius:50%;background:var(--yellow);border:3px solid #fff;display:grid;place-items:center;transition:transform .3s var(--ease)}
+.video:hover .video__play{transform:scale(1.1) rotate(-8deg)}
+.video__cap{
+  position:absolute;left:16px;bottom:13px;font-family:var(--ui);font-size:10px;font-weight:800;
+  letter-spacing:.14em;color:rgba(255,255,255,.85);
+}
+.title__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+@media(max-width:860px){.title__grid{grid-template-columns:1fr}}
+
+/* 画像プレースホルダー */
+.ph{display:grid;place-items:center;width:100%;height:100%}
+.ph span{font-size:11px;font-weight:800;letter-spacing:.08em;color:rgba(39,69,95,.65);text-align:center;padding:0 14px}
+
+/* ============================================================
+   定義テーブル（会社概要・スペック）── th に薄地色
+   ============================================================ */
+.dl{width:100%;border-collapse:collapse;font-size:14.5px;background:#fff;border:1px solid var(--line)}
+.dl th,.dl td{text-align:left;padding:16px 18px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.9}
+.dl th{width:168px;white-space:nowrap;font-weight:700;background:var(--cream);color:var(--ink);font-size:13.5px}
+.dl tr:last-child th,.dl tr:last-child td{border-bottom:0}
+@media(max-width:560px){
+  .dl th,.dl td{display:block;width:auto}
+  .dl th{border-bottom:0;padding-bottom:8px}
+  .dl td{padding-top:0}
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.story{display:grid;grid-template-columns:.34fr 1fr;gap:clamp(20px,4vw,56px);align-items:start}
+.story + .story{margin-top:clamp(50px,6.5vw,84px)}
+.story__side{position:sticky;top:100px}
+.story__no{
+  display:inline-block;font-family:var(--ui);font-size:12px;font-weight:900;letter-spacing:.14em;
+  color:var(--navy);background:var(--yellow);border:1.5px solid var(--navy);border-radius:6px;padding:3px 10px;
+}
+.story__label{font-weight:900;font-size:clamp(19px,2.4vw,25px);margin:12px 0 0;line-height:1.55}
+.story__p{font-size:15.5px;color:var(--ink-soft);margin:0 0 22px;line-height:2.05}
+.story__p:last-child{margin-bottom:0}
+.story__p strong{color:var(--ink);font-weight:700;background:linear-gradient(transparent 68%,rgba(255,198,30,.6) 68%)}
+.pull{
+  border-left:4px solid var(--yellow);background:#fff;border-radius:0 12px 12px 0;
+  padding:16px 20px;margin:26px 0;box-shadow:0 2px 0 var(--line);
+  font-weight:900;font-size:clamp(16.5px,2vw,21px);line-height:1.75;color:var(--ink);
+}
+@media(max-width:860px){.story{grid-template-columns:1fr}.story__side{position:static}}
+
+.minds{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:16px;margin-top:30px}
+.mind{
+  border:2px solid var(--navy);border-radius:16px;padding:26px 24px;background:#fff;box-shadow:0 5px 0 var(--navy);
+  transition:transform .26s var(--ease),box-shadow .26s;
+}
+.mind:hover{transform:translateY(-6px);box-shadow:0 11px 0 var(--navy)}
+.mind__n{
+  display:inline-grid;place-items:center;width:40px;height:40px;border-radius:50%;
+  font-family:var(--ui);font-weight:900;font-size:15px;color:var(--navy);
+  background:var(--yellow);border:2px solid var(--navy);
+}
+.mind__t{font-weight:900;font-size:18px;margin:14px 0 10px;line-height:1.5}
+.mind__d{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.95}
+
+.members{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:16px;margin-top:30px}
+.member{
+  border:2px solid var(--navy);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 5px 0 var(--navy);
+  transition:transform .26s var(--ease),box-shadow .26s;
+}
+.member:hover{transform:translateY(-6px);box-shadow:0 11px 0 var(--navy)}
+.member__av{aspect-ratio:1;position:relative;background:var(--cream);border-bottom:2px solid var(--navy)}
+.member__av img,.member__av .ph{width:100%;height:100%;object-fit:cover}
+.member__body{padding:18px 20px 22px}
+.member__role{font-size:11px;font-weight:800;letter-spacing:.04em;color:var(--blue);margin:0 0 6px}
+.member__name{font-family:var(--ui);font-weight:900;font-size:18px;letter-spacing:.03em;margin:0 0 9px}
+.member__bio{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.9}
+
+/* ============================================================
+   RECRUIT / CONTACT
+   ============================================================ */
+.jobs{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:14px;margin-top:28px}
+.job{border:2px solid var(--navy);border-radius:14px;padding:20px;background:#fff;box-shadow:0 4px 0 var(--navy);transition:transform .22s var(--ease)}
+.job:hover{transform:translateY(-4px)}
+.job__t{font-weight:900;font-size:16px;margin:0 0 8px}
+.job__d{font-size:13.5px;color:var(--ink-soft);margin:0 0 12px;line-height:1.95}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.03em;background:var(--cream);border:1px solid var(--line);border-radius:4px;padding:3px 9px;color:var(--ink-soft)}
+
+.form{display:grid;gap:22px;max-width:720px;margin-top:30px}
+.field{display:grid;gap:9px}
+.field__l{font-size:14px;font-weight:700;display:flex;align-items:center;gap:9px}
+.req{font-size:10px;font-weight:800;letter-spacing:.06em;background:var(--red);color:#fff;padding:3px 8px;border-radius:4px}
+.field input,.field select,.field textarea{
+  width:100%;background:#fff;border:2px solid var(--navy);border-radius:10px;padding:14px 16px;
+  color:var(--ink);font-family:var(--body);font-size:15px;transition:border-color .2s,box-shadow .2s;
+}
+.field textarea{min-height:160px;resize:vertical;line-height:2}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(55,96,130,.2);outline:none}
+.field.is-error input,.field.is-error select,.field.is-error textarea{border-color:var(--red)}
+.field__err{display:none;margin:0;font-size:12.5px;color:var(--red);font-weight:700}
+.field.is-error .field__err{display:block}
+.agree{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--navy);border-radius:12px;padding:18px 20px;background:#fff}
+.agree input{width:20px;height:20px;flex:none;accent-color:var(--yellow-deep);margin-top:3px}
+.agree label{font-size:13.5px;color:var(--ink-soft);line-height:1.95}
+.agree a{color:var(--blue);font-weight:700}
+.field.is-error .agree{border-color:var(--red)}
+.form__note{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.95}
+.form__done{
+  display:none;border:2px solid var(--yellow-deep);border-radius:12px;padding:18px 20px;
+  background:#FFF6D8;font-size:14.5px;line-height:1.95;font-weight:500;
+}
+.form__done.is-on{display:block}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.ft{background:var(--navy);color:#fff;position:relative;z-index:1}
+.ft__dc{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px;
+  border:2px solid #fff2;border-radius:20px;padding:clamp(24px,4vw,38px);
+  background:linear-gradient(120deg,rgba(55,96,130,.55),rgba(55,96,130,.12));
+  margin:clamp(40px,5.5vw,56px) 0 44px;
+}
+.ft__dcT{font-weight:900;font-size:clamp(18px,2.4vw,25px);margin:0 0 8px;line-height:1.55}
+.ft__dcD{font-size:14px;color:rgba(255,255,255,.75);margin:0;max-width:46ch;line-height:1.95}
+.ft__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;padding-bottom:36px}
+.ft__logo{display:flex;align-items:center;gap:14px}
+.ft__logo img{width:60px}
+.ft__logoT{font-weight:900;font-size:17px;letter-spacing:.03em;line-height:1.4}
+.ft__logoT small{display:block;font-family:var(--ui);font-size:9px;font-weight:800;letter-spacing:.26em;color:var(--yellow)}
+.ft__addr{font-size:12.5px;color:rgba(255,255,255,.6);margin:16px 0 0;line-height:2}
+.ft__addr a{color:var(--yellow)}
+.ft__cols{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ft__ct{font-family:var(--ui);font-size:10px;font-weight:800;letter-spacing:.22em;color:var(--yellow);margin:0 0 14px}
+.ft__ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ft__ul a,.ft__ul button{
+  background:none;border:0;padding:0;cursor:pointer;color:rgba(255,255,255,.72);font-size:13.5px;text-decoration:none;
+  font-family:var(--body);transition:color .2s;
+}
+.ft__ul a:hover,.ft__ul button:hover{color:var(--yellow)}
+.ft__btm{
+  display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,.15);padding:20px 0 30px;font-size:12px;color:rgba(255,255,255,.55);
+}
+.ft__btm nav{display:flex;flex-wrap:wrap;gap:16px}
+.ft__btm a{text-decoration:none}
+.ft__btm a:hover{color:var(--yellow)}
+@media(max-width:760px){.ft__grid{grid-template-columns:1fr}}
+
+/* ページトップへ戻る */
+.pagetop{
+  position:fixed;right:18px;bottom:18px;z-index:55;width:52px;height:52px;border-radius:50%;
+  background:var(--yellow);border:2px solid var(--navy);box-shadow:0 4px 0 var(--navy);cursor:pointer;
+  display:grid;place-items:center;font-family:var(--ui);font-weight:900;font-size:16px;color:var(--navy);
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .2s var(--ease),box-shadow .2s;
+}
+.pagetop.is-show{opacity:1;pointer-events:auto}
+.pagetop:hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--navy)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hd">
+  <div class="hd__inner">
+    <button class="hd__logo" data-go="home" aria-label="ホームへ戻る">
+      <img src="assets/logo_icon.png" alt="" id="navLogo">
+      <span class="hd__name">スタジオバナナ<small>STUDIO BANANA</small></span>
+    </button>
+    <nav class="hd__nav" id="hdNav" aria-label="メインナビゲーション">
+      <button class="hd__link" data-go="home">ホーム<small>HOME</small></button>
+      <button class="hd__link" data-go="about">私たちについて<small>ABOUT US</small></button>
+      <button class="hd__link" data-go="games">ゲーム紹介<small>GAMES</small></button>
+      <button class="hd__link" data-go="contact">採用・お問い合わせ<small>CONTACT</small></button>
+      <a class="btn btn--blue" href="#" data-sns="discord">Discord</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="メニューを開閉する" aria-expanded="false" aria-controls="hdNav"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ==================== HOME ==================== -->
+<section class="page" id="page-home" aria-label="ホーム">
+
+  <div class="fv">
+    <div class="fv__bg" id="fvBg" aria-hidden="true"></div>
+    <div class="fv__dots" aria-hidden="true"></div>
+    <div class="wrap fv__inner">
+      <div>
+        <p class="fv__tag"><i></i>新作タイトル 開発中</p>
+        <h1 class="fv__copy sticker">画面の向こうの<span class="y">相棒</span>と、<br>世界を驚かせる。</h1>
+        <p class="fv__sub">ゲームで出会った仲間たちが贈る、予測不能なアソビ場。</p>
+        <div class="fv__cta">
+          <a class="btn btn--blue" href="#" data-sns="discord">Discordに参加する</a>
+          <a class="btn btn--white" href="#" data-go="games">最新トレーラーを見る</a>
+        </div>
+      </div>
+      <div class="fv__logo"><img src="assets/logo_full.png" alt="スタジオバナナ ロゴ"></div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="mqTrack"></div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row">
+          <h2 class="shead__jp">お知らせ</h2>
+          <button class="more" data-go="news">ニュース一覧</button>
+        </div>
+        <span class="shead__en">NEWS</span>
+      </div>
+      <div class="news" id="newsList"></div>
+    </div>
+  </div>
+
+  <div class="tape" aria-hidden="true"></div>
+
+  <div class="block block--cream">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row">
+          <h2 class="shead__jp">タイトル紹介</h2>
+          <button class="more" data-go="games">ゲーム一覧</button>
+        </div>
+        <span class="shead__en">GAMES</span>
+      </div>
+      <p class="lead" style="margin-bottom:30px">遊んだ人が誰かに話したくなる瞬間を、1タイトルに必ず1つ以上仕込みます。</p>
+      <div class="cards" id="gameCards"></div>
+    </div>
+  </div>
+
+  <div class="block block--navy">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row">
+          <h2 class="shead__jp">なぜ、ただのゲーム友達が<br>スタジオを立ち上げたのか。</h2>
+          <button class="more" data-go="about">私たちについて</button>
+        </div>
+        <span class="shead__en">STORY</span>
+      </div>
+      <p class="lead">出会ったのはゲームの中でした。顔も本名も知らないまま、毎晩集まって、勝って、負けて、笑っていた。「この時間を、今度は自分たちで作る側になろう」——始まりは、たったそれだけです。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section class="page" id="page-about" aria-label="私たちについて">
+  <div class="phead">
+    <div class="wrap phead__inner">
+      <h1 class="phead__jp">私たちについて</h1>
+      <p class="phead__en">ABOUT US</p>
+    </div>
+  </div>
+  <div class="crumbbar"><ul class="crumb"><li><button data-go="home">ホーム</button></li><li>私たちについて</li></ul></div>
+
+  <div class="block" style="padding-bottom:clamp(36px,4vw,56px)">
+    <div class="wrap">
+      <p class="lead">スタジオバナナは、オンラインゲームで出会った仲間だけで立ち上げた、日本のインディーゲームスタジオです。私たちは今もプレイヤーとして遊びながら、遊ぶ側が本当に面白いと感じるものだけを作っています。</p>
+    </div>
+  </div>
+
+  <div class="block block--cream">
+    <div class="wrap">
+      <div class="story">
+        <div class="story__side">
+          <span class="story__no">01　はじまり</span>
+          <h2 class="story__label">はじまりの場所</h2>
+        </div>
+        <div>
+          <p class="story__p">私たちの出会いは、会議室でも学校でもありません。<strong>深夜のオンラインサーバー</strong>でした。住んでいる場所も、年齢も、昼間の仕事もバラバラ。共通点は「明日も早いのに、あと1戦だけやってしまう」ことだけでした。</p>
+          <p class="story__p">何百時間も一緒に遊ぶうちに、話す内容は少しずつ変わっていきました。「この仕様、こうだったらもっと面白いのに」「自分たちならこう作る」。文句のはずが、いつのまにか企画会議になっていた。</p>
+          <p class="pull">「作る側に回ろうぜ」<br>——その一言に、全員が即答した夜がありました。</p>
+          <p class="story__p">そこから先は、遊んでいた時間がそのまま開発時間になりました。集合場所は今も変わらずボイスチャットです。私たちにとってスタジオとは、住所ではなく<strong>集まる場所</strong>のことを指します。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="story">
+        <div class="story__side">
+          <span class="story__no">02　名前の由来</span>
+          <h2 class="story__label">スタジオバナナの由来</h2>
+        </div>
+        <div>
+          <p class="story__p">かっこいい社名の候補は、いくらでもありました。全部やめました。私たちが作りたいのは、身構えて向き合うものではなく、<strong>思わず手が伸びて、笑ってしまうもの</strong>だからです。</p>
+          <p class="story__p">バナナは、誰でも知っていて、皮をむけばすぐ食べられて、なぜか見ているだけで少しおかしい。名前を聞いた人が一瞬「え？」と笑ってくれるなら、それが狙いどおりです。</p>
+          <p class="pull">そしてもうひとつ。<br>バナナの皮は、油断した人を確実に滑らせます。</p>
+          <p class="story__p">安心して歩いていたプレイヤーの足を、気持ちよく取る。<strong>予想を裏切る仕掛け</strong>を必ずどこかに置いておく。転んだ人が、怒るより先に笑ってしまう。そういう体験を作るという宣言が、この名前です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tape" aria-hidden="true"></div>
+
+  <div class="block block--cream">
+    <div class="wrap">
+      <div class="story">
+        <div class="story__side">
+          <span class="story__no">03　哲学</span>
+          <h2 class="story__label">私たちの哲学</h2>
+        </div>
+        <div>
+          <p class="story__p">判断に迷ったとき、私たちは必ずこの3つに戻ってきます。</p>
+          <div class="minds">
+            <div class="mind">
+              <span class="mind__n">1</span>
+              <h3 class="mind__t">プレイヤーファースト</h3>
+              <p class="mind__d">私たち自身が、今もいちプレイヤーです。「作り手として正しい」より「遊ぶ側として楽しい」を選びます。届いた声には、直せるものから手をつけます。</p>
+            </div>
+            <div class="mind">
+              <span class="mind__n">2</span>
+              <h3 class="mind__t">大人の本気の悪ふざけ</h3>
+              <p class="mind__d">誰も気づかないかもしれない小ネタに、平気で一週間かけます。ふざけた見た目を成立させるのは、笑えないくらい真面目な作り込みだと知っているからです。</p>
+            </div>
+            <div class="mind">
+              <span class="mind__n">3</span>
+              <h3 class="mind__t">国境も常識も飛び越える</h3>
+              <p class="mind__d">言葉が違っても、面白い瞬間は同じ顔で笑える。最初から多言語・海外プレイヤーを前提に設計し、「日本ではこうだから」を理由にしません。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row"><h2 class="shead__jp">メンバー紹介</h2></div>
+        <span class="shead__en">MEMBER</span>
+      </div>
+      <p class="lead">本名より先にハンドルネームを覚えた5人です。</p>
+      <div class="members" id="memberList"></div>
+    </div>
+  </div>
+
+  <div class="block block--cream">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row"><h2 class="shead__jp">会社概要</h2></div>
+        <span class="shead__en">COMPANY</span>
+      </div>
+      <table class="dl"><tbody id="companyTable"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== GAMES ==================== -->
+<section class="page" id="page-games" aria-label="ゲーム紹介">
+  <div class="phead">
+    <div class="wrap phead__inner">
+      <h1 class="phead__jp">ゲーム紹介</h1>
+      <p class="phead__en">GAMES</p>
+    </div>
+  </div>
+  <div class="crumbbar"><ul class="crumb"><li><button data-go="home">ホーム</button></li><li>ゲーム紹介</li></ul></div>
+
+  <div class="block" style="padding-bottom:0">
+    <div class="wrap">
+      <p class="lead">開発中・運営中のタイトルです。ウィッシュリスト登録とDiscordでのフィードバックが、いちばんの燃料になります。</p>
+    </div>
+  </div>
+  <div class="wrap" id="titleList"></div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section class="page" id="page-contact" aria-label="採用・お問い合わせ">
+  <div class="phead">
+    <div class="wrap phead__inner">
+      <h1 class="phead__jp">採用・お問い合わせ</h1>
+      <p class="phead__en">RECRUIT / CONTACT</p>
+    </div>
+  </div>
+  <div class="crumbbar"><ul class="crumb"><li><button data-go="home">ホーム</button></li><li>採用・お問い合わせ</li></ul></div>
+
+  <div class="block">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row"><h2 class="shead__jp">画面の向こうで一緒に熱くなれる、<br>新しい相棒を待っています。</h2></div>
+        <span class="shead__en">RECRUIT</span>
+      </div>
+      <p class="lead">経歴書の見栄えより、「これを作りたい」と朝まで話せることを重視します。フルリモート・複業歓迎。日本語または英語でやり取りができれば、お住まいの国は問いません。</p>
+      <div class="jobs" id="jobList"></div>
+    </div>
+  </div>
+
+  <div class="tape" aria-hidden="true"></div>
+
+  <div class="block block--cream">
+    <div class="wrap">
+      <div class="shead">
+        <div class="shead__row"><h2 class="shead__jp">お問い合わせフォーム</h2></div>
+        <span class="shead__en">CONTACT</span>
+      </div>
+      <p class="lead">採用へのご応募、お仕事のご依頼、コラボのご相談、ゲームのご感想。すべてこちらで受け付けています。</p>
+
+      <div class="form" id="form">
+        <div class="field" id="f-type">
+          <label class="field__l" for="i-type">お問い合わせ種別<span class="req">必須</span></label>
+          <select id="i-type">
+            <option value="">選択してください</option>
+            <option>採用へのご応募</option>
+            <option>お仕事・開発のご依頼</option>
+            <option>コラボ・取材のご相談</option>
+            <option>ゲームのご感想・不具合のご報告</option>
+            <option>その他</option>
+          </select>
+          <p class="field__err">お問い合わせ種別を選択してください。</p>
+        </div>
+        <div class="field" id="f-name">
+          <label class="field__l" for="i-name">お名前／ハンドルネーム<span class="req">必須</span></label>
+          <input id="i-name" type="text" autocomplete="name" placeholder="例）バナナ 太郎">
+          <p class="field__err">お名前を入力してください。</p>
+        </div>
+        <div class="field" id="f-mail">
+          <label class="field__l" for="i-mail">メールアドレス<span class="req">必須</span></label>
+          <input id="i-mail" type="email" autocomplete="email" placeholder="例）you@example.com">
+          <p class="field__err">メールアドレスを正しい形式で入力してください。</p>
+        </div>
+        <div class="field" id="f-msg">
+          <label class="field__l" for="i-msg">お問い合わせ内容<span class="req">必須</span></label>
+          <textarea id="i-msg" placeholder="作りたいもの、聞きたいこと、伝えたいことをそのままお書きください。ポートフォリオのURLがあればあわせてご記入ください。"></textarea>
+          <p class="field__err">お問い合わせ内容を10文字以上で入力してください。</p>
+        </div>
+        <div class="field" id="f-agree">
+          <div class="agree">
+            <input id="i-agree" type="checkbox">
+            <label for="i-agree"><a href="#" id="ppLink">個人情報の取り扱い</a>に同意のうえ送信してください。いただいた情報は、お問い合わせへの回答および採用選考の目的にのみ使用します。</label>
+          </div>
+          <p class="field__err">個人情報の取り扱いへの同意が必要です。</p>
+        </div>
+        <div><button class="btn" id="submit" type="button">この内容で送信する</button></div>
+        <p class="form__note">通常3営業日以内に、ご記入いただいたメールアドレス宛にご返信します。3営業日を過ぎても返信がない場合は、お手数ですがDiscordよりご連絡ください。</p>
+        <div class="form__done" id="formDone"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="tape" aria-hidden="true"></div>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__dc">
+      <div>
+        <p class="ft__dcT">まずはDiscordで、<br>同じ画面の前に集まりませんか。</p>
+        <p class="ft__dcD">開発の相談、テストプレイの募集、雑談まで。私たちが一番長くいる場所です。</p>
+      </div>
+      <a class="btn" href="#" data-sns="discord">Discordサーバーに参加する</a>
+    </div>
+
+    <div class="ft__grid">
+      <div>
+        <div class="ft__logo">
+          <img src="assets/logo_icon.png" alt="スタジオバナナ">
+          <span class="ft__logoT">スタジオバナナ<small>STUDIO BANANA</small></span>
+        </div>
+        <p class="ft__addr">お問い合わせ：<span id="ftMail"></span></p>
+      </div>
+      <div class="ft__cols">
+        <div>
+          <p class="ft__ct">SITE MAP</p>
+          <ul class="ft__ul">
+            <li><button data-go="home">ホーム</button></li>
+            <li><button data-go="about">私たちについて</button></li>
+            <li><button data-go="games">ゲーム紹介</button></li>
+            <li><button data-go="contact">採用・お問い合わせ</button></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ft__ct">FOLLOW US</p>
+          <ul class="ft__ul">
+            <li><a href="#" data-sns="x">X（旧Twitter）</a></li>
+            <li><a href="#" data-sns="youtube">YouTube</a></li>
+            <li><a href="#" data-sns="discord">Discord</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="ft__btm">
+      <nav aria-label="規約">
+        <a href="#" data-doc="privacy">プライバシーポリシー</a>
+        <a href="#" data-doc="terms">利用規約</a>
+        <a href="#" data-go="contact">お問い合わせ</a>
+      </nav>
+      <span>© Studio Banana. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="pagetop" id="pagetop" aria-label="ページの先頭へ戻る">↑</button>
+
+<script>
+/* =========================================================
+   1. 設定
+   ========================================================= */
+const CONFIG = {
+  contactMail:"contact@studio-banana.example",
+  formEndpoint:"",   // 例 "https://formspree.io/f/xxxx"（空のあいだはメーラー起動）
+  privacyUrl:"",
+  termsUrl:"",
+  sns:{ x:"https://x.com/", youtube:"https://www.youtube.com/", discord:"https://discord.gg/" }
+};
+const IMG = {
+  fvBg:"assets/fv_bg.png",             // ← 用意する黄色い背景画像
+  team:"assets/team_illustration.png"
+};
+
+const COMPANY = [
+  ["会社名","スタジオバナナ合同会社（Studio Banana LLC）"],
+  ["設立","2024年11月"],
+  ["代表","BANA"],
+  ["所在地","〒000-0000 東京都○○区○○ 0-0-0"],
+  ["事業内容","ゲームの企画・開発・運営／オンラインコミュニティの運営"],
+  ["メンバー","5名（業務委託を含む）"],
+  ["連絡先","contact@studio-banana.example"]
+];
+
+const NEWS = [
+  {d:"2026.07.22", c:"DEV",   t:"『PROJECT: SLIP』クローズドβ第2回の参加者募集を開始しました"},
+  {d:"2026.07.09", c:"MEDIA", t:"インディーゲーム特集にスタジオ紹介が掲載されました"},
+  {d:"2026.06.28", c:"EVENT", t:"国内インディー展示会に出展します。試遊台を3台設置予定です"},
+  {d:"2026.06.15", c:"DEV",   t:"開発日誌 #12：物理挙動を作り直したら全員が転んだ話"}
+];
+
+const GAMES = [
+  {
+    id:"slip", title:"PROJECT: SLIP", status:"開発中",
+    catch:"最後に立っていた奴が、たぶん一番運がいい。",
+    genre:"マルチプレイ・パーティーアクション",
+    platform:"PC（Steam）／コンソール展開を検討中",
+    lang:"日本語／English／한국어／简体中文",
+    players:"オンライン 2〜8人",
+    release:"2027年 配信予定",
+    desc:"床が滑る。壁が動く。信じていた足場が、いちばん大事な場面で裏切る。理不尽なはずなのに、なぜか全員で笑ってしまう——そんな数分間を詰め込んだ対戦アクションです。操作は2ボタン。初めて会った相手とその場で盛り上がれることを最優先に設計しています。",
+    video:"",
+    store:"#",
+    thumb:"assets/game_thumb_1.png",
+    hero:"assets/game_hero_1.png",
+    shots:[{src:"assets/game_1_shot_1.png",cap:"ステージ：崩れる市場"},
+           {src:"assets/game_1_shot_2.png",cap:"8人対戦のフィナーレ"},
+           {src:"assets/game_1_shot_3.png",cap:"スキン：熟れすぎ"}],
+    grad:"linear-gradient(135deg,#F9DE6B 0%,#DDAF14 100%)"
+  },
+  {
+    id:"nightcall", title:"NIGHT CALL CITY", status:"配信中",
+    catch:"眠らない街で、もうひとつの人生を。",
+    genre:"オンラインロールプレイ／コミュニティサーバー",
+    platform:"PC",
+    lang:"日本語／English",
+    players:"最大200人 同時接続",
+    release:"配信中",
+    desc:"私たちが出会った場所を、自分たちの手で作り直したタイトルです。仕事を選び、街に住み、他人と関わる。用意されたクエストではなく、その日集まった人間が物語を作ります。いただいたフィードバックをもとに毎週更新しています。",
+    video:"", store:"#",
+    thumb:"assets/game_thumb_2.png",
+    hero:"assets/game_hero_2.png",
+    shots:[{src:"assets/game_2_shot_1.png",cap:"ダウンタウンの深夜"},
+           {src:"assets/game_2_shot_2.png",cap:"住民イベント"},
+           {src:"assets/game_2_shot_3.png",cap:"車両カスタム"}],
+    grad:"linear-gradient(135deg,#8FB4D4 0%,#27455F 85%)"
+  }
+];
+
+const MEMBERS = [
+  {n:"BANA", r:"代表／ディレクター", b:"言い出しっぺ。全体の方向を決める人。会議で一番よく脱線する。", avatar:"assets/member_bana.png"},
+  {n:"Kuro", r:"プログラマー", b:"ネットワークと物理挙動の担当。「できません」の前に必ず一度試す。", avatar:"assets/member_kuro.png"},
+  {n:"TOFU", r:"演出／レベルデザイン", b:"驚かせ方の設計者。プレイヤーが転ぶ位置を1cm単位で調整する。", avatar:"assets/member_tofu.png"},
+  {n:"Rin",  r:"3Dアーティスト", b:"世界の見た目を全部握っている人。バナナのモデルだけで37種類作った。", avatar:"assets/member_rin.png"},
+  {n:"ZAWA", r:"サウンド／カオス担当", b:"音を作る係、兼、まともな企画を台無しにする係。だいたい面白くなる。", avatar:"assets/member_zawa.png"}
+];
+
+const JOBS = [
+  {t:"ゲームプランナー", d:"仕様書を書くだけでなく、自分で組んで検証まで走れる方。", tags:["業務委託","フルリモート"]},
+  {t:"クライアントプログラマー", d:"マルチプレイの同期・最適化に興味がある方。Lua／C#／TypeScript。", tags:["正社員","業務委託"]},
+  {t:"3Dアーティスト", d:"キャラクターまたは背景。デフォルメ表現が得意な方を歓迎します。", tags:["業務委託","複業可"]},
+  {t:"サウンドクリエイター", d:"効果音・BGM。ふざけた音を真面目に作れる方。", tags:["業務委託","スポット可"]},
+  {t:"コミュニティマネージャー", d:"Discord運営と海外プレイヤー対応。英語でのやり取りができる方。", tags:["複業可","フルリモート"]}
+];
+
+/* =========================================================
+   2. ヘルパー
+   ========================================================= */
+const $  = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+
+function media(src,grad,label){
+  if(!src) return `<span class="ph" style="background:${esc(grad)}"><span>${esc(label)}</span></span>`;
+  return `<img src="${esc(src)}" alt="${esc(label)}" loading="lazy" data-fb="${esc(grad)}" data-fblabel="${esc(label)}">`;
+}
+function bindFallback(root=document){
+  $$("img[data-fb]",root).forEach(img=>{
+    img.addEventListener("error",()=>{
+      const wrap=document.createElement("span");
+      wrap.className="ph";
+      wrap.style.background=img.dataset.fb;
+      const t=document.createElement("span");
+      t.textContent=img.dataset.fblabel;
+      wrap.appendChild(t);
+      img.replaceWith(wrap);
+    },{once:true});
+    if(img.complete && img.naturalWidth===0) img.dispatchEvent(new Event("error"));
+  });
+}
+function bindSns(root=document){
+  $$("[data-sns]",root).forEach(a=>{
+    const url=CONFIG.sns[a.dataset.sns];
+    if(url){ a.href=url; a.target="_blank"; a.rel="noopener noreferrer"; }
+  });
+}
+
+/* FV背景画像：存在すれば適用、無ければ黄色グラデのまま */
+(function setFvBg(){
+  if(!IMG.fvBg) return;
+  const probe=new Image();
+  probe.onload=()=>{ $("#fvBg").style.setProperty("--fv-bg",`url("${IMG.fvBg}")`); };
+  probe.src=IMG.fvBg;
+})();
+
+/* =========================================================
+   3. 描画
+   ========================================================= */
+// マーキー帯（2周分並べてループ）
+(function buildMarquee(){
+  const words=["STUDIO BANANA","画面の向こうの相棒と、世界を驚かせる。","予測不能なアソビ場","CREATING FUN, ONE CODE AT A TIME"];
+  const seq=words.map((w,i)=>`<span class="marquee__item${i%2?" marquee__item--w":""}">${esc(w)}</span>`).join('<span class="marquee__item marquee__item--w">●</span>');
+  $("#mqTrack").innerHTML=seq+'<span class="marquee__item marquee__item--w">●</span>'+seq+'<span class="marquee__item marquee__item--w">●</span>';
+})();
+
+$("#companyTable").innerHTML = COMPANY.map(r=>`<tr><th>${esc(r[0])}</th><td>${esc(r[1])}</td></tr>`).join("");
+
+$("#newsList").innerHTML = NEWS.map(n=>`
+  <a class="news__item" href="#" data-go="news">
+    <span class="news__date">${esc(n.d)}</span>
+    <span class="news__cat" data-c="${esc(n.c)}">${esc(n.c)}</span>
+    <span class="news__ttl">${esc(n.t)}</span>
+    <span class="news__arw">→</span>
+  </a>`).join("");
+
+$("#gameCards").innerHTML = GAMES.map(g=>`
+  <button class="card" data-title="${esc(g.id)}">
+    <span class="card__kv"><span class="status${g.status==="配信中"?" status--live":""}">${esc(g.status)}</span>${media(g.thumb,g.grad,g.title)}</span>
+    <span class="card__body">
+      <span class="card__meta">${esc(g.genre)}</span>
+      <span class="card__ttl">${esc(g.title)}</span>
+      <span class="card__cat">${esc(g.catch)}</span>
+    </span>
+  </button>`).join("");
+
+$("#memberList").innerHTML = MEMBERS.map((m,i)=>`
+  <article class="member">
+    <div class="member__av">${media(m.avatar||IMG.team, `linear-gradient(150deg,${i%2?"#8FB4D4":"#F9DE6B"},#FBF3D8)`, m.n)}</div>
+    <div class="member__body">
+      <p class="member__role">${esc(m.r)}</p>
+      <h3 class="member__name">${esc(m.n)}</h3>
+      <p class="member__bio">${esc(m.b)}</p>
+    </div>
+  </article>`).join("");
+
+$("#jobList").innerHTML = JOBS.map(j=>`
+  <article class="job">
+    <h3 class="job__t">${esc(j.t)}</h3>
+    <p class="job__d">${esc(j.d)}</p>
+    <div class="tags">${j.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join("")}</div>
+  </article>`).join("");
+
+$("#titleList").innerHTML = GAMES.map(g=>`
+  <article class="title" id="title-${esc(g.id)}">
+    <div class="title__hero"><span class="status${g.status==="配信中"?" status--live":""}">${esc(g.status)}</span>${media(g.hero,g.grad,g.title)}</div>
+    <div class="title__grid">
+      <div>
+        <p class="title__catch">${esc(g.catch)}</p>
+        <h2 class="title__name">${esc(g.title)}</h2>
+        <p class="title__txt">${esc(g.desc)}</p>
+        <div class="shots">
+          ${g.shots.map(s=>`<div class="shot">${media(s.src,g.grad,s.cap)}<span class="shot__cap">${esc(s.cap)}</span></div>`).join("")}
+        </div>
+        <button class="video" data-video="${esc(g.video)}" aria-label="${esc(g.title)} のトレーラーを再生する">
+          <span class="video__play"><svg width="20" height="22" viewBox="0 0 20 22" aria-hidden="true"><path d="M19 11L0 22V0z" fill="#27455F"></path></svg></span>
+          <span class="video__cap">TRAILER — ${g.video?"クリックで再生":"公開準備中"}</span>
+        </button>
+        <div class="title__cta">
+          <a class="btn" href="${esc(g.store)}" target="_blank" rel="noopener noreferrer">Steamでウィッシュリストに追加</a>
+          <a class="btn btn--white" href="#" data-sns="discord">Discordで開発を追う</a>
+        </div>
+      </div>
+      <div>
+        <table class="dl"><tbody>
+          <tr><th>ジャンル</th><td>${esc(g.genre)}</td></tr>
+          <tr><th>プラットフォーム</th><td>${esc(g.platform)}</td></tr>
+          <tr><th>対応言語</th><td>${esc(g.lang)}</td></tr>
+          <tr><th>プレイ人数</th><td>${esc(g.players)}</td></tr>
+          <tr><th>配信時期</th><td>${esc(g.release)}</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </article>`).join("");
+
+bindSns();
+bindFallback();
+
+$("#ftMail").innerHTML = `<a href="mailto:${esc(CONFIG.contactMail)}">${esc(CONFIG.contactMail)}</a>`;
+$$("[data-doc]").forEach(a=>{
+  const url = a.dataset.doc==="privacy" ? CONFIG.privacyUrl : CONFIG.termsUrl;
+  if(url) a.href=url;
+});
+if(CONFIG.privacyUrl){ const p=$("#ppLink"); p.href=CONFIG.privacyUrl; p.target="_blank"; p.rel="noopener noreferrer"; }
+
+/* =========================================================
+   4. ページ切り替え
+   ========================================================= */
+const PAGES=["home","about","games","contact"];
+function go(name,push=true){
+  if(!PAGES.includes(name)) name="home";
+  $$(".page").forEach(p=>p.classList.remove("is-active"));
+  $("#page-"+name).classList.add("is-active");
+  $$(".hd__link").forEach(b=>{
+    if(b.dataset.go===name) b.setAttribute("aria-current","page");
+    else b.removeAttribute("aria-current");
+  });
+  document.body.classList.remove("is-open");
+  $("#burger").setAttribute("aria-expanded","false");
+  if(push && location.hash!=="#"+name) history.pushState({p:name},"","#"+name);
+  window.scrollTo(0,0);
+}
+function slip(){
+  const l=$("#navLogo");
+  if(!l) return;
+  l.classList.add("is-slip");
+  setTimeout(()=>l.classList.remove("is-slip"),460);
+}
+
+document.addEventListener("click",e=>{
+  const nav=e.target.closest("[data-go]");
+  if(nav){
+    e.preventDefault();
+    if(nav.dataset.go==="news") return;   // ニュース一覧ページのURLをここに設定
+    slip();
+    go(nav.dataset.go);
+    return;
+  }
+  const card=e.target.closest("[data-title]");
+  if(card){
+    go("games");
+    requestAnimationFrame(()=>{
+      const el=$("#title-"+card.dataset.title);
+      if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-96,behavior:"smooth"});
+    });
+    return;
+  }
+  const doc=e.target.closest("[data-doc]");
+  if(doc && !doc.getAttribute("href").startsWith("http")) e.preventDefault();
+});
+window.addEventListener("popstate",()=>go(location.hash.replace("#",""),false));
+
+$("#burger").addEventListener("click",()=>{
+  const open=document.body.classList.toggle("is-open");
+  $("#burger").setAttribute("aria-expanded",open?"true":"false");
+});
+
+/* ページトップへ戻る */
+const pagetop=$("#pagetop");
+window.addEventListener("scroll",()=>{
+  pagetop.classList.toggle("is-show",window.scrollY>480);
+},{passive:true});
+pagetop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+/* =========================================================
+   5. トレーラー（クリック時に読み込み）
+   ========================================================= */
+document.addEventListener("click",e=>{
+  const v=e.target.closest(".video");
+  if(!v) return;
+  const id=v.dataset.video;
+  if(!id){ $(".video__cap",v).textContent="TRAILER — 公開までもう少しお待ちください"; return; }
+  v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0" title="トレーラー" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+});
+
+/* =========================================================
+   6. お問い合わせフォーム
+   ========================================================= */
+const setErr=(id,on)=>$("#"+id).classList.toggle("is-error",on);
+$("#submit").addEventListener("click",async()=>{
+  const type=$("#i-type").value.trim();
+  const name=$("#i-name").value.trim();
+  const mail=$("#i-mail").value.trim();
+  const msg =$("#i-msg").value.trim();
+  const agree=$("#i-agree").checked;
+  const okMail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail);
+
+  setErr("f-type",!type);
+  setErr("f-name",!name);
+  setErr("f-mail",!okMail);
+  setErr("f-msg",msg.length<10);
+  setErr("f-agree",!agree);
+  const first=$(".field.is-error");
+  if(first){
+    const target=$("input,select,textarea",first);
+    if(target) target.focus();
+    return;
+  }
+
+  const done=$("#formDone"), btn=$("#submit");
+  btn.disabled=true; btn.textContent="送信しています…";
+  try{
+    if(CONFIG.formEndpoint){
+      const res=await fetch(CONFIG.formEndpoint,{
+        method:"POST",
+        headers:{"Content-Type":"application/json",Accept:"application/json"},
+        body:JSON.stringify({type,name,email:mail,message:msg})
+      });
+      if(!res.ok) throw new Error("failed");
+      done.textContent="送信しました。3営業日以内にご返信します。届かない場合は迷惑メールフォルダもご確認ください。";
+    }else{
+      const subject="【"+type+"】"+name+" 様よりお問い合わせ";
+      const bodyTxt="お問い合わせ種別："+type+"\nお名前："+name+"\nメールアドレス："+mail+"\n\n"+msg;
+      location.href="mailto:"+CONFIG.contactMail+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(bodyTxt);
+      done.textContent="メールソフトを開きました。開かない場合は "+CONFIG.contactMail+" 宛に直接お送りください。";
+    }
+    done.classList.add("is-on");
+    done.scrollIntoView({block:"center",behavior:"smooth"});
+  }catch(err){
+    done.textContent="送信できませんでした。時間をおいて再度お試しいただくか、"+CONFIG.contactMail+" 宛に直接お送りください。";
+    done.classList.add("is-on");
+  }finally{
+    btn.disabled=false; btn.textContent="この内容で送信する";
+  }
+});
+$$(".field input,.field select,.field textarea").forEach(el=>{
+  const ev = el.type==="checkbox" ? "change" : "input";
+  el.addEventListener(ev,()=>el.closest(".field").classList.remove("is-error"));
+});
+
+/* =========================================================
+   7. 初期化
+   ========================================================= */
+go(location.hash.replace("#","")||"home",false);
+</script>
+</body>
+</html>
